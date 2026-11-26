@@ -27,6 +27,11 @@ OUTPUT_PATH = "/output/entry.txt"
 
 
 def main() -> int:
+    # Guard the competition's limit: the entry must stay under 200
+    # characters, so refuse to write anything longer rather than hand
+    # the judge an invalid line.
+    if len(ENTRY) > 200 or not ENTRY.strip():
+        raise ValueError("entry must be 1-200 non-blank characters")
     # The grader provides /output; create it only if it is missing.
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     # Write the single line with a trailing newline, as UTF-8.
